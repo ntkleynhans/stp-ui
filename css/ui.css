@@ -1,0 +1,474 @@
+/* some basic styles. nothing to do with flexbox */
+header, footer, nav, article, aside {
+    /*border: 1px solid black;*/
+    padding: 0.25em;
+    margin: 0.25em;
+    border-radius: 0.25em;
+}
+
+/*button { border-radius: 0.25em; padding: 0.25em;}*/
+
+button {
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555555;
+    color: white;
+}
+
+input {
+  font-size: 1em;
+  padding: 3px 5px 3px 10px;
+  border: 1px solid #ddd;
+  /*margin-bottom: 12px;*/
+}
+
+
+select {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.book-title {
+  color: #395870;
+  display: block;
+}
+
+.text-offset {
+  color: #7c7c80;
+  font-size: 0.9em;
+  /*padding: 5%;*/
+}
+
+/*
+Force full width & height.
+
+If this block is removed, the layout height/length will be determined by
+the amount of content in the page. That might result in a page which has
+a footer only a few inches from the top of the viewport, or one which
+scrolls beyond the viewport.
+
+This forces the layout to always be full screen regardless of how much,
+or how little, content is in place. Neither is "right" or "wrong", there
+are valid cases for each. I just want to be clear what's controlling the
+page/viewport height.
+*/
+
+html, body, .viewport {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* encapsulate the various syntax in helper clases */
+/* inspi#030A1A by http://infrequently.org/2009/08/css-3-progress/ */
+
+/* items flex/expand vertically */
+.vbox {
+    /* previous syntax */
+    display: -webkit-box;
+    display:    -moz-box;
+    display:         box;
+
+    -webkit-box-orient: vertical;
+       -moz-box-orient: vertical;
+        -ms-box-orient: vertical;
+            box-orient: vertical;
+
+    /* current syntax */
+    display: -webkit-flex;
+    display:    -moz-flex;
+    display:     -ms-flex;
+    display:         flex;
+
+    -webkit-flex-direction: column;
+       -moz-flex-direction: column;
+        -ms-flex-direction: column;
+            flex-direction: column;
+}
+
+/* items flex/expand horizontally */
+.hbox {
+    /* previous syntax */
+    display: -webkit-box;
+    display:    -moz-box;
+    display:     -ms-box;
+    display:         box;
+
+    -webkit-box-orient: horizontal;
+       -moz-box-orient: horizontal;
+        -ms-box-orient: horizontal;
+            box-orient: horizontal;
+
+    /* current syntax */
+    display: -webkit-flex;
+    display:    -moz-flex;
+    display:     -ms-flex;
+    display:         flex;
+
+    -webkit-flex-direction: row;
+       -moz-flex-direction: row;
+        -ms-flex-direction: row;
+            flex-direction: row;
+}
+
+.space-between {
+    /* previous syntax */
+    -webkit-box-pack: justify;
+       -moz-box-pack: justify;
+        -ms-box-pack: justify;
+            box-pack: justify;
+
+    /* current syntax */
+    -webkit-justify-content: space-between;
+       -moz-justify-content: space-between;
+        -ms-justify-content: space-between;
+            justify-content: space-between;
+}
+
+/* I went with a fixed height header & footer because it's a common case.
+This could easily be alte#030A1A to flex proportionally with the page.
+*/
+header{
+    height: 10%;
+    color: white;
+    text-align: center;
+    background: #307ee5;/*#030A1A; /* For browsers that do not support gradients */
+    /*background: -webkit-linear-gradient(left, #030A1A , #021F3D); /* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient(right, #030A1A, #021F3D); /* For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient(right, #030A1A, #021F3D); /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(to right, #030A1A , #021F3D); /* Standard syntax (must be last) */
+    background: -webkit-linear-gradient(left, #26a5b8 , #26a5b8); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #26a5b8, #26a5b8); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #26a5b8, #26a5b8); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #26a5b8, #26a5b8); /* Standard syntax (must be last) */
+}
+
+footer {
+    height: 2%;
+    color: white;
+    text-align: left;
+    background: #307ee5;/*#030A1A; /* For browsers that do not support gradients */
+    /*background: -webkit-linear-gradient(left, #030A1A , #021F3D); /* For Safari 5.1 to 6.0 */
+    /*background: -o-linear-gradient(right, #030A1A, #021F3D); /* For Opera 11.1 to 12.0 */
+    /*background: -moz-linear-gradient(right, #030A1A, #021F3D); /* For Firefox 3.6 to 15 */
+    /*background: linear-gradient(to right, #030A1A , #021F3D); /* Standard syntax (must be last) */
+    background: -webkit-linear-gradient(left, #c8baa0 , #c8baa0); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(right, #c8baa0, #c8baa0); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(right, #c8baa0, #c8baa0); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to right, #c8baa0, #c8baa0); /* Standard syntax (must be last) */
+
+}
+
+.main {
+    /* previous syntax */
+    -webkit-box-flex: 1;
+       -moz-box-flex: 1;
+        -ms-box-flex: 1;
+            box-flex: 1;
+
+    /* current syntax */
+    -webkit-flex: 1;
+       -moz-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+article {
+    /* previous syntax */
+    -webkit-box-flex: 6;
+       -moz-box-flex: 6;
+        -ms-box-flex: 6;
+            box-flex: 6;
+
+    /* current syntax */
+    -webkit-flex: 6;
+       -moz-flex: 6;
+        -ms-flex: 6;
+            flex: 6;
+  /*background-image: url("/speechui/static/beach_a.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;*/
+}
+
+aside, nav {
+    border-right: 1px solid black;
+    border-radius: 0.0em;
+    /* previous syntax */
+    -webkit-box-flex: 1;
+       -moz-box-flex: 1;
+        -ms-box-flex: 1;
+            box-flex: 1;
+
+    /* current syntax */
+    -webkit-flex: 1;
+       -moz-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #c3c4be;
+    display: block;
+}
+
+li {
+    /*float: left;*/
+    display: block;
+   -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+li a {
+    display: block;
+    color: black;
+    text-align: left;
+    padding: 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #b2b3ad;
+}
+
+fieldset {
+    border:1px solid green;
+    border-radius: 0.25em;
+}
+
+legend {
+  padding: 0.2em 0.5em;
+  border:1px solid green;
+  color:green;
+  font-size:90%;
+  text-align:center;
+}
+
+.project {
+    border-collapse: collapse;
+    width: 100%;
+    font: 14px/1.4 Helvetica, Arial, sans-serif;
+}
+
+.project th {
+    /*font-size: 1.2em;
+    /*font-family: Verdana,sans-serif;*/
+    font: 14px/1.4 Helvetica, Arial, sans-serif;
+}
+
+.project td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    /*font-size: 0.9em;*/
+}
+
+.project tr:hover {
+    background-color:#f5f5f5;
+}
+
+.project th {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: left;
+}
+
+/*audio {
+    display: none;
+}*/
+
+body.waiting * { cursor: wait; }
+
+/* Style the tab */
+div.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+div.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+div.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+div.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+#myInput {
+  background-image: url("/speechui/static/searchicon.png");
+  background-size: 2.5%;
+  background-repeat: no-repeat;
+  width: 95%;
+  font-size: 1em;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+dl {
+    margin-bottom: 1%;
+}
+ 
+dl dt {
+    background:#5f9be3;
+    color:#fff;
+    float:left; 
+    font-weight:bold; 
+    margin-right:1%; 
+    padding: 1%;  
+    width:25%; 
+}
+ 
+dl dd {
+    margin:1% 0; 
+    padding:1% 0;
+}
+
+dd {
+    background:#dddddd;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  margin: 10px 0;
+  width: 100%;
+}
+
+input[type=range]:focus {
+  outline: none;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #2497E3;
+  /*border-radius: 1px;*/
+  border: 0px solid #000000;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #2497E3;
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: #A1D0FF;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -7px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+  background: #2497E3;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  box-shadow: 0px 0px 0px #000000;
+  background: #2497E3;
+  border-radius: 1px;
+  border: 0px solid #000000;
+}
+
+input[type=range]::-moz-range-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #2497E3;
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: #A1D0FF;
+  cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+  width: 100%;
+  height: 5px;
+  cursor: pointer;
+  animate: 0.2s;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+  background: #2497E3;
+  /*border: 0px solid #000000;*/
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+
+input[type=range]::-ms-fill-upper {
+  background: #2497E3;
+  /*border: 0px solid #000000;*/
+  border-radius: 2px;
+  box-shadow: 0px 0px 0px #000000;
+}
+
+input[type=range]::-ms-thumb {
+  box-shadow: 0px 0px 0px #000000;
+  border: 1px solid #2497E3;
+  height: 18px;
+  width: 18px;
+  border-radius: 25px;
+  background: #A1D0FF;
+  cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+  background: #2497E3;
+}
+
+input[type=range]:focus::-ms-fill-upper {
+  background: #2497E3;
+}
+

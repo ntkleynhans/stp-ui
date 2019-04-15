@@ -688,7 +688,7 @@ var Project = (function (window, document, $, undefined) {
                 content += "<dt>PROJECT AUDIO DURATION:</dt><dd>" + date.toISOString().substr(11, 12) + "</dd>";
                 content += "<dt>PROJECT COLLATOR:</dt><dd>" + editors[obj["collator"]]["name"] + " " + editors[obj["collator"]]["surname"] + "</dd>";
                 content += "<dt>PROJECT ASSIGNED:</dt><dd> YES </dd></dl>";
-                content += '<div><button onclick="Project.delete_project()">Delete Project</button>&nbsp;&nbsp;<button onclick="Project.goback()">Go Back</button></div>';
+                content += '<div><button onclick="Project.delete_project()">Delete Project</button>&nbsp;&nbsp;<button onclick="Project.reassign_tasks('+i+')">Reassign Tasks</button>&nbsp;&nbsp;<button onclick="Project.goback()">Go Back</button></div>';
                 ps.innerHTML = content;
             }
         }
@@ -710,6 +710,7 @@ var Project = (function (window, document, $, undefined) {
                 GUI_STATE = "LS";
                 changes = false;
                 selected = -1;
+                tasks = [];
                 addfilter();
                 showprojecttab();
                 display_projects(projects);
@@ -719,6 +720,7 @@ var Project = (function (window, document, $, undefined) {
             addfilter();
             showprojecttab();
             selected = -1;
+            tasks = [];
             display_projects(projects);
         }
     }
@@ -1512,6 +1514,118 @@ var Project = (function (window, document, $, undefined) {
             alertify.alert("Help", help_message, function(){});
         } else {
             alertify.alert("Help", "Sorry no help provided for this context!");
+        }
+    }
+
+    module.reassign_tasks = function(i) {
+        var obj = projects["projects"][i];
+        loadproject(obj);
+    }
+
+    // User is trying to logout
+    function loadproject(project) {
+        var data = {};
+        data['token'] = localStorage.getItem("token");
+        data['projectid'] = project['projectid'];
+        appserver_send(APP_PLOADPROJECT, data, loadproject_callback);
+    }
+
+    // Callback for server response
+    var tasks;
+    function loadproject_callback(xmlhttp) {
+        // No running server detection
+        if ((xmlhttp.status==503)) {
+            alertify.alert("Application server unavailable", function(){});
+        }
+
+        if ((xmlhttp.readyState==4) && (xmlhttp.status != 0)) {
+            var response_data = JSON.parse(xmlhttp.responseText);
+
+            // Logout application was successful
+            if(xmlhttp.status==200) {
+                tasks = response_data["tasks"];
+                if(tasks.length != 0) {
+                    display_tasks();
+                }
+            } else { // Something unexpected happened
+                alertify.alert("LOADPROJECT ERROR: " + response_data["message"] + "\n(Status: " + xmlhttp.status + ")", function(){});
+            }
+        }
+
+        if ((xmlhttp.readyState==4) && (xmlhttp.status == 0)) {
+            alertify.alert("LOADPROJECT Network Error. Please check your connection and try again later!", function(){});
+            document.body.className = 'vbox viewport';
+        }
+    }
+
+    function display_tasks() {
+        var ps = document.getElementById("projectspace");
+        var obj = projects["projects"][selected];
+
+        ps.innerHTML = "";
+        if(tasks.length > 0 ) {
+            content = '<br><table class="project"><tr><th>Task ID</th><th>Current Editor</th><th>New Editor</th></tr>';
+            for(var key in tasks) {
+                var region = tasks[key];
+                content += '<tr><td> ' + region['taskid'] + ' </td>';
+                var current_editor = region['editor'];
+                content += '<td>' + editors[current_editor]["name"] + " " + editors[current_editor]["surname"] + '</td>';
+                content += '<td ><select style="width: 100%;" id="editor_'+ key +'" onchange="Project.update_editor(this.id,this.value)" >';
+                content += '<option value="null">Editor...</option>';
+                var ed_users = [];
+                var ed_key = {};
+                for(var edit in editors) {
+                    var name = editors[edit]["name"] + " " + editors[edit]["surname"];
+                    ed_key[name] = edit;
+                    ed_users.push(name);
+                }
+                ed_users.sort();
+                for(var ndx = 0; ndx < ed_users.length; ndx++) {
+                    content += '<option value="'+ ed_key[ed_users[ndx]] +'">'+ ed_users[ndx] +'</option>';
+                }
+                content += '</select></td></tr>';
+            }
+            content += '</table>';
+        }
+        content += '<div><button onclick="Project.update_editing()">Update Editors</button>&nbsp;&nbsp;<button onclick="Project.goback()">Go Back</button></div>';
+        ps.innerHTML = content;
+    }
+
+    // User has assigned a new editor
+    module.update_editor = function(id, value) {
+        var parts = id.split("_");
+        tasks[parts[1]].new_editor = value;
+    }
+
+    module.update_editing = function() {
+        var data = {};
+        data['token'] = localStorage.getItem("token");
+        data['projectid'] = projects["projects"][selected]['projectid'];
+        data['project'] = projects["projects"][selected];
+        data['tasks'] = tasks;
+        appserver_send(APP_PUPDATEEDITING, data, updateediting_callback);
+    }
+
+    function updateediting_callback(xmlhttp) {
+        // No running server detection
+        if ((xmlhttp.status==503)) {
+            alertify.alert("Application server unavailable", function(){});
+        }
+
+        if ((xmlhttp.readyState==4) && (xmlhttp.status != 0)) {
+            var response_data = JSON.parse(xmlhttp.responseText);
+
+            // Logout application was successful
+            if(xmlhttp.status==200) {
+                alertify.success("Editors updated!");
+            } else { // Something unexpected happened
+                alertify.alert("UPDATEEDITING ERROR: " + response_data["message"] + "\n(Status: " + xmlhttp.status + ")", function(){});
+            }
+        }
+
+        if ((xmlhttp.readyState==4) && (xmlhttp.status == 0)) {
+            alertify.alert("UPDATEEDITING Network Error. Please check your connection and try again later!", function(){});
+            document.body.className = 'vbox viewport';
         }
     }
 

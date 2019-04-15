@@ -37,6 +37,7 @@ var APP_PUNLOCKPROJECT = PBASE_URL + "/unlockproject";
 var APP_PDIARIZEAUDIO = PBASE_URL + "/diarizeaudio";
 var APP_PCLEARERROR = PBASE_URL + "/clearerror";
 var APP_PCHANGEPASSWORD = PBASE_URL + "/changepassword";
+var APP_PUPDATEEDITING = PBASE_URL + "/updateediting";
 
 // EDITOR
 var EBASE_URL = "https://detect.ebit.co.za/app/editor"

@@ -577,8 +577,8 @@ var Tasks = (function (window, document, $, undefined) {
                     ed_users.push(name);
                 }
                 ed_users.sort();
-                for(var ndx = 0; ndx < ed_users.length; ndx++) {
-                    shtml += '<option value="'+ ed_key[ed_users[ndx]] +'">'+ ed_users[ndx] +'</option>';
+                for(var j = 0; ndx < ed_users.length; j++) {
+                    shtml += '<option value="'+ ed_key[ed_users[j]] +'">'+ ed_users[j] +'</option>';
                 }
                 shtml += '</select></td>';
 
@@ -702,7 +702,6 @@ var Tasks = (function (window, document, $, undefined) {
         proj["projectstatus"] = "In Progress";
         proj["category"] = project["category"];
         data['project'] = proj
-            console.log(data);
         appserver_send(APP_PSAVEPROJECT, data, saveproject_callback);
     }
 

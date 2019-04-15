@@ -1618,6 +1618,7 @@ var Project = (function (window, document, $, undefined) {
             // Logout application was successful
             if(xmlhttp.status==200) {
                 alertify.success("Editors updated!");
+                module.goback();
             } else { // Something unexpected happened
                 alertify.alert("UPDATEEDITING ERROR: " + response_data["message"] + "\n(Status: " + xmlhttp.status + ")", function(){});
             }
